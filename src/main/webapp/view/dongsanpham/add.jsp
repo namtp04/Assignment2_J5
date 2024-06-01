@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>List Product types</title>
+    <title>Create Product types</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
@@ -14,6 +14,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
             integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet"/>
@@ -52,72 +55,37 @@
     </div>
 </nav>
 <div class="container">
-    <h1 class="mb-3 mt-5">Product types Management</h1>
-    <a class="btn btn-outline-success" href="/product-type/view-add">Add</a>
-    <div class="d-flex justify-content-end">
-        <form id="colorSearchForm" action="/product-type/search" method="post">
-            <div class="input-group">
-                <input name="productTypeSearchValue" type="text" class="form-control" placeholder="Enter name product-type"
-                       aria-label="Search customer" value="${param.productTypeSearchValue}">
-                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+    <h1 class="text-center mb-3 mt-5">Create Product types</h1>
+    <div class="d-flex justify-content-center">
+        <div class="card w-50 d-flex justify-content-center">
+            <div class="card-body">
+                <form action="/product-type/add" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Mã</label>
+                        <input type="text" class="form-control" value="${productType.ma}" name="ma">
+                        <c:if test="${not empty errors}">
+                            <span class="text-danger">${errors['ma']}</span>
+                        </c:if>
+                        <span class="text-danger">${error}</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tên</label>
+                        <input type="text" class="form-control" value="${productType.ten}" name="ten">
+                        <c:if test="${not empty errors}">
+                            <span class="text-danger">${errors['ten']}</span>
+                        </c:if>
+                    </div>
+                    <div class="text-center">
+                        <a href="/product-type/list" class="btn btn-secondary">Back</a>
+                        <button type="submit" class="btn btn-outline-success"
+                                onclick="return confirm('Are you want to create this item?')">Add
+                        </button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Mã</th>
-            <th>Tên</th>
-            <th colspan="2">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${lstLSP}" var="cl">
-            <tr>
-                <td>${cl.ma}</td>
-                <td>${cl.ten}</td>
-                <td>
-                    <a class="btn btn-outline-warning" href="/product-type/view-update/${cl.id}">Update</a>
-                    <a onclick="return confirm('Do you want to delete this item?')" class="btn btn-outline-danger"
-                       href="/product-type/delete/${cl.id}">Delete</a>
-                </td>
-            </tr>
-        </c:forEach>
-        <c:if test="${lstLSP.size()==0}">
-            <tr>
-                <td colspan="4">Dữ liệu trống</td>
-            </tr>
-        </c:if>
-        </tbody>
-    </table>
 </div>
-<ul class="pagination justify-content-center">
-    <c:if test="${currentPage==0}">
-        <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-        </li>
-    </c:if>
-    <c:if test="${currentPage>0}">
-        <li class="page-item">
-            <a class="page-link" href="?page=${currentPage-1}">Previous</a>
-        </li>
-    </c:if>
-    <c:forEach begin="1" end="${numpage}" var="trang">
-        <li class="page-item">
-            <a class="page-link <c:if test="${currentPage == trang-1}">active</c:if>"
-               href="?page=${trang-1}">${trang}</a>
-        </li>
-    </c:forEach>
-    <c:if test="${currentPage==numpage-1}">
-        <li class="page-item disabled">
-            <a class="page-link">Next</a>
-        </li>
-    </c:if>
-    <c:if test="${currentPage<numpage-1}">
-        <li class="page-item">
-            <a class="page-link" href="?page=${currentPage+1}">Next</a>
-        </li>
-    </c:if>
-</ul>
 </body>
 </html>
