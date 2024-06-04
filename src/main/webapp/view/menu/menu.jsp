@@ -49,7 +49,7 @@
             </a>
         </li>
         <li class="nav-item mb-3">
-            <a href="/product-detail/index" class="navbar-brand">
+            <a href="/product-detail/list" class="navbar-brand">
                 <i class="fa-solid fa-circle-info"></i>
                 <span>Manager Product Detail</span>
             </a>
@@ -69,7 +69,7 @@
     </ul>
     <div>
         <c:if test="${not empty sessionScope.username}">
-            <a href="/auth/logout" class="navbar-brand d-flex justify-content-start" >
+            <a href="/auth/logout" class="navbar-brand d-flex justify-content-start" onclick="return confirm('Are you sure want to logout?')">
                 <i class="lni lni-exit"></i>
                 <span>Logout</span>
             </a>

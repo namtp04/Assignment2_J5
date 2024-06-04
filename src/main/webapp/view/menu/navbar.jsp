@@ -12,10 +12,10 @@
                     class="bi bi-person-circle"></i>  Customer</a>
         </c:if>
     </li>
-    <li class="nav-item">
+    <div class="nav-item">
         <c:if test="${not empty sessionScope.role}">
             <a class="nav-link disabled text-dark" aria-disabled="true" href="#">ROLE: ${sessionScope.role}</a>
         </c:if>
-    </li>
+    </div>
 
 </ul>

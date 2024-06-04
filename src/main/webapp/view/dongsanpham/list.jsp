@@ -119,5 +119,14 @@
         </li>
     </c:if>
 </ul>
+
+<script>
+    window.onload = function() {
+        <c:if test="${not empty deleteFail}">
+        alert('${deleteFail}');
+        window.location.href='/product-type/list';
+        </c:if>
+    };
+</script>
 </body>
 </html>

@@ -80,7 +80,7 @@
                     <div class="text-center">
                         <a href="/product-type/list" class="btn btn-secondary">Back</a>
                         <button type="submit" class="btn btn-outline-success"
-                                onclick="return confirm('Are you want to update this item?')">Update
+                                onclick="return confirm('Are you sure want to update this item?')">Update
                         </button>
                     </div>
                 </form>

@@ -2,6 +2,7 @@ package com.example.assignment2.controller;
 
 import com.example.assignment2.entity.MauSac;
 import com.example.assignment2.entity.SanPham;
+import com.example.assignment2.repository.ChiTietSanPhamRepositpry;
 import com.example.assignment2.repository.MauSacRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ import java.util.UUID;
 public class MauSacController {
     @Autowired
     private MauSacRepository mauSacRepository;
+
+    @Autowired
+    private ChiTietSanPhamRepositpry chiTietSanPhamRepositpry;
 
     @GetMapping("list")
     public String hienThi(Model model, @RequestParam(value = "page",defaultValue = "0") Integer page) {
@@ -79,7 +83,12 @@ public class MauSacController {
     }
 
     @GetMapping("delete/{ma}")
-    public String xoa(@PathVariable("ma") UUID ma) {
+    public String xoa(@PathVariable("ma") UUID ma,Model model, @RequestParam(value = "page",defaultValue = "0") Integer page) {
+        if(chiTietSanPhamRepositpry.getByIdMauSac(ma).size()!=0){
+            model.addAttribute("lstCL", phanTrang(page,model));
+            model.addAttribute("deleteFail","Màu sắc này đang có 1 chi tiết sản phẩm không thể xóa");
+            return "/mausac/list";
+        }
         mauSacRepository.deleteById(ma);
         return "redirect:/color/list";
     }

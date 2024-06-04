@@ -1,6 +1,7 @@
 package com.example.assignment2.controller;
 
 import com.example.assignment2.entity.SanPham;
+import com.example.assignment2.repository.ChiTietSanPhamRepositpry;
 import com.example.assignment2.repository.SanPhamRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ import java.util.UUID;
 public class SanPhamController {
     @Autowired
     private SanPhamRepository sanPhamRepository;
+
+    @Autowired
+    private ChiTietSanPhamRepositpry chiTietSanPhamRepositpry;
 
     @GetMapping("list")
     public String hienThi(Model model, @RequestParam(value = "page",defaultValue = "0") Integer page) {
@@ -94,9 +98,16 @@ public class SanPhamController {
     }
 
     @GetMapping("delete/{ma}")
-    public String xoa(@PathVariable("ma") UUID ma) {
-        sanPhamRepository.deleteById(ma);
-        return "redirect:/product/list";
+    public String xoa(@PathVariable("ma") UUID ma,Model model, @RequestParam(value = "page",defaultValue = "0") Integer page) {
+        if(chiTietSanPhamRepositpry.getByIdSanPham(ma).size()!=0){
+            model.addAttribute("lstSP", phanTrang(page,model));
+            System.out.println(chiTietSanPhamRepositpry.getByIdSanPham(ma));
+            model.addAttribute("deleteFail","Sản phẩm này đang có 1 chi tiết sản phẩm không thể xóa");
+            return "/product/list";
+        }else{
+            sanPhamRepository.deleteById(ma);
+            return "redirect:/product/list";
+        }
     }
 
     private List<SanPham> phanTrang(Integer currentPage, Model model) {

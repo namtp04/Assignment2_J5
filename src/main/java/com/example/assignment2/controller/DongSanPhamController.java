@@ -1,6 +1,7 @@
 package com.example.assignment2.controller;
 
 import com.example.assignment2.entity.DongSanPham;
+import com.example.assignment2.repository.ChiTietSanPhamRepositpry;
 import com.example.assignment2.repository.DongSanPhamRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ import java.util.UUID;
 public class DongSanPhamController {
     @Autowired
     private DongSanPhamRepository dongSanPhamRepository;
+
+    @Autowired
+    private ChiTietSanPhamRepositpry chiTietSanPhamRepositpry;
 
     @GetMapping("list")
     public String hienThi(Model model, @RequestParam(value = "page",defaultValue = "0") Integer page){
@@ -66,7 +70,12 @@ public class DongSanPhamController {
     }
 
     @GetMapping("delete/{ma}")
-    public String xoa(@PathVariable("ma") UUID ma) {
+    public String xoa(@PathVariable("ma") UUID ma,Model model, @RequestParam(value = "page",defaultValue = "0") Integer page) {
+        if(chiTietSanPhamRepositpry.getByIdDongSanPham(ma).size()!=0){
+            model.addAttribute("lstLSP", phanTrang(page,model));
+            model.addAttribute("deleteFail","Dòng sản phẩm này đang có 1 chi tiết sản phẩm không thể xóa");
+            return "/dongsanpham/list";
+        }
         dongSanPhamRepository.deleteById(ma);
         return "redirect:/product-type/list";
     }

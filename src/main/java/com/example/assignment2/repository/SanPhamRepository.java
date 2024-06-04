@@ -12,7 +12,12 @@ import java.util.UUID;
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
     SanPham findSanPhamById (UUID id);
+
     SanPham findSanPhamByMa (String ma);
+
     @Query("select c from SanPham c where c.ten like :ten")
     Page<SanPham> findByTen(@Param("ten")String ten, Pageable pageable);
+
+
+
 }

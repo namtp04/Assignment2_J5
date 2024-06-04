@@ -78,7 +78,6 @@
                 <td>${sp.ma}</td>
                 <td>${sp.ten}</td>
                 <td>
-                    <a class="btn btn-outline-info" href="/product/detail/${sp.id}">Detail</a>
                     <a class="btn btn-outline-warning" href="/product/view-update/${sp.id}">Update</a>
                     <a onclick="return confirm('Do you want to delete this item?')" class="btn btn-outline-danger"
                        href="/product/delete/${sp.id}">Delete</a>
@@ -92,6 +91,7 @@
         </c:if>
         </tbody>
     </table>
+
 </div>
 <ul class="pagination justify-content-center">
     <c:if test="${currentPage==0}">
@@ -119,5 +119,14 @@
         </li>
     </c:if>
 </ul>
+
+<script>
+    window.onload = function() {
+        <c:if test="${not empty deleteFail}">
+        alert('${deleteFail}');
+        window.location.href='/product/list';
+        </c:if>
+    };
+</script>
 </body>
 </html>

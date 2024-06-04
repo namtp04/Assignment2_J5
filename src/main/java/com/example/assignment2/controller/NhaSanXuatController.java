@@ -2,6 +2,7 @@ package com.example.assignment2.controller;
 
 import com.example.assignment2.entity.NhaSanXuat;
 import com.example.assignment2.entity.SanPham;
+import com.example.assignment2.repository.ChiTietSanPhamRepositpry;
 import com.example.assignment2.repository.NhaSanXuatRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ import java.util.UUID;
 public class NhaSanXuatController {
     @Autowired
     private NhaSanXuatRepository nhaSanXuatRepository;
+
+    @Autowired
+    private ChiTietSanPhamRepositpry chiTietSanPhamRepositpry;
 
     @GetMapping("list")
     public String hienThi(Model model, @RequestParam(value = "page", defaultValue = "0") Integer page) {
@@ -65,7 +69,12 @@ public class NhaSanXuatController {
     }
 
     @GetMapping("delete/{ma}")
-    public String xoa(@PathVariable("ma") UUID ma) {
+    public String xoa(@PathVariable("ma") UUID ma,Model model, @RequestParam(value = "page",defaultValue = "0") Integer page) {
+        if(chiTietSanPhamRepositpry.getByIdNhaSanXuat(ma).size()!=0){
+            model.addAttribute("lstNSX", phanTrang(page,model));
+            model.addAttribute("deleteFail","Nhà sản xuất này đang có 1 chi tiết sản phẩm không thể xóa");
+            return "/nhasanxuat/list";
+        }
         nhaSanXuatRepository.deleteById(ma);
         return "redirect:/NSX/list";
     }

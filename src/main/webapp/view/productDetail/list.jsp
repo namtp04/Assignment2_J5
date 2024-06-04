@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>List Producer</title>
+    <title>List Product Detail</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
@@ -52,40 +52,97 @@
     </div>
 </nav>
 <div class="container">
-    <h1 class="mb-3 mt-5">Producer Management</h1>
-    <a class="btn btn-outline-success" href="/NSX/view-add">Add</a>
-    <div class="d-flex justify-content-end">
-        <form id="colorSearchForm" action="/NSX/search" method="post">
-            <div class="input-group">
-                <input name="nsxSearchValue" type="text" class="form-control" placeholder="Enter name producer"
-                       aria-label="Search customer" value="${param.nsxSearchValue}">
-                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
-            </div>
-        </form>
+    <h1 class="mb-3 mt-5">Product Detail Management</h1>
+    <a class="btn btn-outline-success" href="/product-detail/view-add">Add</a>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-7">
+            <form style="" id="form"
+                  action="/product-detail/filter" method="post"
+                  class="align-items-center">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <span>Product</span>
+                        <select name="searchProduct" class="form-select" aria-label="Default select example">
+                            <option value="" ${not empty sessionScope.selectedProduct ? '' : 'selected'}>All</option>
+                            <c:forEach items="${listProduct}" var="product">
+                                <option value="${product.id}" ${product.id == sessionScope.selectedProduct ? 'selected' : ''}>
+                                        ${product.ten}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3" style="">
+                        <span>Product Type</span>
+                        <select name="searchProductType" class="form-select" aria-label="Default select example">
+                            <option value="" ${not empty sessionScope.selectedProductType ? '' : 'selected'}>All
+                            </option>
+                            <c:forEach items="${listProductType}" var="productType">
+                                <option value="${productType.id}" ${productType.id == sessionScope.selectedProductType ? 'selected' : ''}>
+                                        ${productType.ten}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <span>Color</span>
+                        <select name="searchColor" class="form-select" aria-label="Default select example">
+                            <option value="" ${not empty sessionScope.selectedColor ? '' : 'selected'}>All</option>
+                            <c:forEach items="${listColor}" var="color">
+                                <option value="${color.id}" ${color.id == sessionScope.selectedColor ? 'selected' : ''}>
+                                        ${color.ten}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <button type="submit" class="btn btn-outline-primary mt-4">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+
+
     <table class="table">
         <thead>
         <tr>
-            <th>Mã</th>
-            <th>Tên</th>
+            <th>#</th>
+            <th>Product name</th>
+            <th>Producer name</th>
+            <th>Color</th>
+            <th>Product Type</th>
+            <th>Quantity</th>
+            <th>Buying price</th>
+            <th>Selling price</th>
+            <th>Year of sales</th>
             <th colspan="2">Action</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${lstNSX}" var="n">
+        <c:forEach items="${lstSPCT}" var="sp" varStatus="loop">
             <tr>
-                <td>${n.ma}</td>
-                <td>${n.ten}</td>
+                <td>${loop.count}</td>
+                <td>${sp.sanPham.ten}</td>
+                <td>${sp.nhaSanXuat.ten}</td>
+                <td>${sp.mauSac.ten}</td>
+                <td>${sp.dongSanPham.ten}</td>
+                <td>${sp.soLuongTon}</td>
+                <td>${sp.giaNhap}</td>
+                <td>${sp.giaBan}</td>
+                <td>${sp.namBH}</td>
                 <td>
-                    <a class="btn btn-outline-warning" href="/NSX/view-update/${n.id}">Update</a>
+                    <a class="btn btn-outline-warning" href="/product-detail/view-update/${sp.id}">Update</a>
                     <a onclick="return confirm('Do you want to delete this item?')" class="btn btn-outline-danger"
-                       href="/NSX/delete/${n.id}">Delete</a>
+                       href="/product-detail/delete/${sp.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
-        <c:if test="${lstNSX.size()==0}">
+        <c:if test="${lstSPCT.size()==0}">
             <tr>
-                <td colspan="4">Dữ liệu trống</td>
+                <td colspan="10">Dữ liệu trống</td>
             </tr>
         </c:if>
         </tbody>
@@ -117,14 +174,5 @@
         </li>
     </c:if>
 </ul>
-
-<script>
-    window.onload = function() {
-        <c:if test="${not empty deleteFail}">
-        alert('${deleteFail}');
-        window.location.href='/NSX/list';
-        </c:if>
-    };
-</script>
 </body>
 </html>

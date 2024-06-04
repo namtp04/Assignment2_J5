@@ -53,40 +53,36 @@
 </nav>
 <div class="container">
     <h1 class="text-center mb-3 mt-5">Update product</h1>
-    <div class="card-body">
-        <form action="/product/update" method="post">
-            <div class="mb-3" style="display: none">
-                <label class="form-label">ID</label>
-                <input type="text" class="form-control" value="${product.id}" name="id">
-                <c:if test="${not empty errors}">
-                    <span class="text-danger">${errors['id']}</span>
-                </c:if>
-                <span class="text-danger">${error}</span>
-            </div>
+    <div class="d-flex justify-content-center">
+        <div class="card w-50 d-flex justify-content-center">
+            <div class="card-body">
+                <form action="/product/update" method="post">
+                    <input type="text" class="form-control" value="${product.id}" name="id" style="display: none">
+                    <div class="mb-3">
+                        <label class="form-label">Mã</label>
+                        <input type="text" class="form-control" value="${product.ma}" name="ma">
+                        <c:if test="${not empty errors}">
+                            <span class="text-danger">${errors['ma']}</span>
+                        </c:if>
+                        <span class="text-danger">${error}</span>
+                    </div>
 
-            <div class="mb-3">
-                <label class="form-label">Mã</label>
-                <input type="text" class="form-control" value="${product.ma}" name="ma">
-                <c:if test="${not empty errors}">
-                    <span class="text-danger">${errors['ma']}</span>
-                </c:if>
-                <span class="text-danger">${error}</span>
+                    <div class="mb-3">
+                        <label class="form-label">Tên</label>
+                        <input type="text" class="form-control" value="${product.ten}" name="ten">
+                        <c:if test="${not empty errors}">
+                            <span class="text-danger">${errors['ten']}</span>
+                        </c:if>
+                    </div>
+                    <div class="text-center">
+                        <a href="/product/list" class="btn btn-secondary">Back</a>
+                        <button type="submit" class="btn btn-outline-success"
+                                onclick="return confirm('Are you sure want to update this item?')">Update
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Tên</label>
-                <input type="text" class="form-control" value="${product.ten}" name="ten">
-                <c:if test="${not empty errors}">
-                    <span class="text-danger">${errors['ten']}</span>
-                </c:if>
-            </div>
-            <div class="text-center">
-                <a href="/product/list" class="btn btn-secondary">Back</a>
-                <button type="submit" class="btn btn-outline-success"
-                        onclick="return confirm('Are you want to update this item?')">Update
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 </body>

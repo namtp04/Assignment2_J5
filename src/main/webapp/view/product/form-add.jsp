@@ -77,7 +77,7 @@
                     <div class="text-center">
                         <a href="/product/list" class="btn btn-secondary">Back</a>
                         <button type="submit" class="btn btn-outline-success"
-                                onclick="return confirm('Are you want to create this item?')">Add
+                                onclick="return confirm('Are you sure want to create this item?')">Add
                         </button>
                     </div>
                 </form>
