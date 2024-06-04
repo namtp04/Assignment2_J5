@@ -1,7 +1,6 @@
 package com.example.assignment2.controller;
 
 import com.example.assignment2.entity.ChiTietSanPham;
-import com.example.assignment2.entity.DongSanPham;
 import com.example.assignment2.repository.ChiTietSanPhamRepositpry;
 import com.example.assignment2.repository.DongSanPhamRepository;
 import com.example.assignment2.repository.MauSacRepository;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -74,7 +76,18 @@ public class ChiTietSanPhamController {
 
     @GetMapping("delete/{ma}")
     public String xoa(@PathVariable("ma")UUID ma){
+        chiTietSanPhamRepositpry.deleteById(ma);
         return "redirect:/product-detail/list";
+    }
+
+    @GetMapping("view-update/{ma}")
+    public String viewUpdate(Model model, @PathVariable("ma") UUID ma) {
+        model.addAttribute("listProduct", sanPhamRepository.findAll());
+        model.addAttribute("listProductType", dongSanPhamRepository.findAll());
+        model.addAttribute("listColor", mauSacRepository.findAll());
+        model.addAttribute("listProducer", nhaSanXuatRepository.findAll());
+        model.addAttribute("product", chiTietSanPhamRepositpry.findById(ma).get());
+        return "/productDetail/update";
     }
 
     @GetMapping("view-add")
@@ -87,7 +100,30 @@ public class ChiTietSanPhamController {
     }
 
     @PostMapping("add")
-    public String add(@ModelAttribute("product") ChiTietSanPham chiTietSanPham, Model model) {
+    public String add(@ModelAttribute("product")@Valid ChiTietSanPham chiTietSanPham,BindingResult bindingResult, Model model) {
+        model.addAttribute("listProduct", sanPhamRepository.findAll());
+        model.addAttribute("listProductType", dongSanPhamRepository.findAll());
+        model.addAttribute("listColor", mauSacRepository.findAll());
+        model.addAttribute("listProducer", nhaSanXuatRepository.findAll());
+        if(bindingResult.hasErrors()){
+            model.addAttribute("errors",getErrorMessages(bindingResult));
+            return "/productDetail/add";
+        }
+        chiTietSanPhamRepositpry.save(chiTietSanPham);
+        return "redirect:/product-detail/list";
+    }
+
+    @PostMapping("update")
+    public String update(@ModelAttribute("product")@Valid ChiTietSanPham chiTietSanPham,BindingResult bindingResult, Model model) {
+        model.addAttribute("listProduct", sanPhamRepository.findAll());
+        model.addAttribute("listProductType", dongSanPhamRepository.findAll());
+        model.addAttribute("listColor", mauSacRepository.findAll());
+        model.addAttribute("listProducer", nhaSanXuatRepository.findAll());
+        if(bindingResult.hasErrors()){
+            model.addAttribute("errors",getErrorMessages(bindingResult));
+            model.addAttribute("product", chiTietSanPhamRepositpry.findById(chiTietSanPham.getId()).get());
+            return "/productDetail/update";
+        }
         chiTietSanPhamRepositpry.save(chiTietSanPham);
         return "redirect:/product-detail/list";
     }
@@ -125,11 +161,19 @@ public class ChiTietSanPhamController {
         Pageable pageable = PageRequest.of(currentPage, 5);
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), lstFilter.size());
-        List<ChiTietSanPham> sublist = lstFilter.subList(start, end);
-        Page<ChiTietSanPham> hehe = new PageImpl<>(sublist, pageable, lstFilter.size());
+        List<ChiTietSanPham> subList = lstFilter.subList(start, end);
+        Page<ChiTietSanPham> hehe = new PageImpl<>(subList, pageable, lstFilter.size());
 
         model.addAttribute("numpage", hehe.getTotalPages());
         model.addAttribute("currentPage", currentPage);
         return hehe;
+    }
+
+    public Map<String, String> getErrorMessages(BindingResult bindingResult) {
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        return errors;
     }
 }

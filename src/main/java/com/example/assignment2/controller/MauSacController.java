@@ -1,7 +1,6 @@
 package com.example.assignment2.controller;
 
 import com.example.assignment2.entity.MauSac;
-import com.example.assignment2.entity.SanPham;
 import com.example.assignment2.repository.ChiTietSanPhamRepositpry;
 import com.example.assignment2.repository.MauSacRepository;
 import jakarta.validation.Valid;

@@ -40,9 +40,9 @@ public class LoginController {
             if(nhanVienRepository.getNhanVienAdmin(loginReq.getUsername())!=null){
                 session.setAttribute("role","ADMIN");
             }else{
-                session.setAttribute("role","STAFF");
+                session.setAttribute("role","NHÂN VIÊN");
             }
-            return "redirect:/product/list";
+            return "redirect:/ban-hang/hien-thi";
         }
         model.addAttribute("error", "Login false check username and password");
         return "/login/login";

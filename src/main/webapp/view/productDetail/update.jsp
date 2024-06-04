@@ -53,13 +53,14 @@
     </div>
 </nav>
 <div class="container">
-    <h1 class="text-center mb-3 mt-5">Create product detail</h1>
+    <h1 class="text-center mb-3 mt-5">Update product detail</h1>
     <div class="d-flex justify-content-center">
         <div class="card w-50 d-flex justify-content-center">
             <div class="card-body">
-                <form action="/product-detail/add" method="post">
+                <form action="/product-detail/update" method="post">
                     <div class="mb-3">
                         <label class="form-label">Product</label>
+                        <input type="text" class="form-control" value="${product.id}" name="id" style="display: none">
                         <select name="sanPham" class="form-select" aria-label="Default select example">
                             <option value="">-Choose Product-</option>
                             <c:forEach items="${listProduct}" var="n">
@@ -120,6 +121,7 @@
                         <c:if test="${not empty errors}">
                             <span class="text-danger">${errors['namBH']}</span>
                         </c:if>
+                        <span class="text-danger">${error}</span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Quantity</label>
@@ -127,7 +129,7 @@
                         <c:if test="${not empty errors}">
                             <span class="text-danger">${errors['soLuongTon']}</span>
                         </c:if>
-
+                        <span class="text-danger">${error}</span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Buying price</label>
@@ -135,6 +137,7 @@
                         <c:if test="${not empty errors}">
                             <span class="text-danger">${errors['giaNhap']}</span>
                         </c:if>
+                        <span class="text-danger">${error}</span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Selling price</label>
@@ -148,14 +151,14 @@
                         <label class="form-label">Description</label>
                         <textarea rows="4" class="form-control" name="moTa">${product.moTa}</textarea>
                         <c:if test="${not empty errors}">
-                            <span class="text-danger">${errors['ma']}</span>
+                            <span class="text-danger">${errors['moTa']}</span>
                         </c:if>
                         <span class="text-danger">${error}</span>
                     </div>
                     <div class="text-center">
                         <a href="/product-detail/list" class="btn btn-secondary">Back</a>
                         <button type="submit" class="btn btn-outline-success"
-                                onclick="return confirm('Are you sure want to create this item?')">Add
+                                onclick="return confirm('Are you sure want to update this item?')">Update
                         </button>
                     </div>
                 </form>
