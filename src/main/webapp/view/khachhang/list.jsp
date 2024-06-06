@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>List Bill</title>
+    <title>List Customer</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
@@ -52,22 +52,14 @@
     </div>
 </nav>
 <div class="container">
-    <h1 class="mb-3 mt-5">Bill Management</h1>
-    <%--    <a class="btn btn-outline-success" href="/bill/view-add">Add</a>--%>
+    <h1 class="mb-3 mt-5">Customer Management</h1>
+    <a class="btn btn-outline-success" href="/customer/view-add">Add</a>
     <div class="d-flex justify-content-end">
-        <form action="/bill/search" method="post">
-            <div class="row">
-                <div class="col-8">
-                    <span>Trạng thái</span>
-                    <select name="filterTrangThai" class="form-select" aria-label="Default select example">
-                        <option value="" ${not empty sessionScope.trangThai ? '' : 'selected'}>All</option>
-                        <option value="0" ${sessionScope.trangThai == 0 ? 'selected' : ''}>Chưa thanh toán</option>
-                        <option value="1" ${sessionScope.trangThai == 1 ? 'selected' : ''}>Đã thanh toán</option>
-                    </select>
-                </div>
-                <div class="col-4">
-                    <button type="submit" class="btn btn-outline-dark mt-4 mx-2">Filter</button>
-                </div>
+        <form action="/customer/search" method="post">
+            <div class="input-group">
+                <input name="customerSearchValue" type="text" class="form-control" placeholder="Enter number phone"
+                       aria-label="Search customer" value="${param.customerSearchValue}">
+                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
             </div>
         </form>
     </div>
@@ -75,26 +67,25 @@
         <thead>
         <tr>
             <th>Mã</th>
-            <th>Tên khách hàng</th>
-            <th>Tên nhân viên</th>
-            <th>Ngày tạo</th>
-            <th>SĐT khách hàng</th>
-            <th>Tình trạng</th>
+            <th>Tên</th>
+            <th>Ngày sinh</th>
+            <th>SĐT</th>
+            <th>Địa chỉ</th>
             <th colspan="2">Action</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${lstHD}" var="cl">
+        <c:forEach items="${lstKH}" var="cl">
             <tr>
                 <td>${cl.ma}</td>
-                <td>${cl.khachHang.ho} ${cl.khachHang.tenDem} ${cl.khachHang.ten}</td>
-                <td>${cl.nhanVien.ten}</td>
-                <td>${cl.ngayTao}</td>
+                <td>${cl.ho} ${cl.tenDem} ${cl.ten}</td>
+                <td>${cl.ngaySinh}</td>
                 <td>${cl.sdt}</td>
-                <td>${cl.tinhTrang==1?"Đã thanh toán":"Chưa thanh toán"}</td>
+                <td>${cl.diaChi}</td>
                 <td>
-                    <a class="btn btn-outline-warning" href="/bill/view-update/${cl.id}">Update</a>
-                    <a class="btn btn-outline-danger" href="/bill/detail/${cl.id}">Detail</a>
+                    <a class="btn btn-outline-warning" href="/product-type/view-update/${cl.id}">Update</a>
+                    <a onclick="return confirm('Do you want to delete this item?')" class="btn btn-outline-danger"
+                       href="/product-type/delete/${cl.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -136,10 +127,10 @@
 </ul>
 
 <script>
-    window.onload = function () {
+    window.onload = function() {
         <c:if test="${not empty deleteFail}">
         alert('${deleteFail}');
-        window.location.href = '/product-type/list';
+        window.location.href='/product-type/list';
         </c:if>
     };
 </script>

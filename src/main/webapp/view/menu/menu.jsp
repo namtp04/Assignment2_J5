@@ -66,17 +66,16 @@
             </li>
         </c:if>
         <li class="nav-item mb-3">
-            <a href="/customer/index" class="navbar-brand">
+            <a href="/customer/list" class="navbar-brand">
                 <i class="fa-solid fa-bars-progress"></i>
-                <span>Manager Customer</span>
-
+                <span>Quản lý khách hàng</span>
             </a>
         </li>
 
         <li class="nav-item mb-3">
-            <a href="/bill/index" class="navbar-brand">
+            <a href="/bill/list" class="navbar-brand">
                 <i class="fa-solid fa-money-bill"></i>
-                <span>Manager Order</span>
+                <span>Quản lý hóa đơn</span>
             </a>
         </li>
         <li class="nav-item mb-3">
