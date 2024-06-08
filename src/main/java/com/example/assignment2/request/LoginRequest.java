@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginRequest {
 
-    @NotBlank(message = "username khong duoc trong")
+    @NotBlank(message = "Username không được trống")
     private String username;
 
-    @NotEmpty(message = "password khong duoc trong")
+    @NotBlank(message = "Password không được trống")
     private String password;
 
     private Integer trangThai;

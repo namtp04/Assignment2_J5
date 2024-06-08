@@ -4,17 +4,17 @@
 <ul class="nav ms-auto">
     <li class="nav-item">
         <c:if test="${not empty sessionScope.username}">
-            <a class="nav-link text-dark" aria-disabled="true" href="#"><i
+            <a class="nav-link text-white" aria-disabled="true" href="#"><i
                     class="bi bi-person-circle"></i>   ${sessionScope.username}</a>
         </c:if>
         <c:if test="${empty sessionScope.username}">
-            <a class="nav-link text-dark" aria-disabled="true" href="#"><i
+            <a class="nav-link text-white" aria-disabled="true" href="#"><i
                     class="bi bi-person-circle"></i>  Customer</a>
         </c:if>
     </li>
     <div class="nav-item">
         <c:if test="${not empty sessionScope.role}">
-            <a class="nav-link disabled text-dark" aria-disabled="true" href="#">ROLE: ${sessionScope.role}</a>
+            <a class="nav-link disabled text-white" aria-disabled="true" href="#">ROLE: ${sessionScope.role}</a>
         </c:if>
     </div>
 

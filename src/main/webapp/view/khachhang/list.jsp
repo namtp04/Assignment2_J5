@@ -21,12 +21,12 @@
 <body>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false"
      tabindex="-1"
-     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="background-color: #0e2238">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
             <jsp:include page="../menu/navbar.jsp"></jsp:include>
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+        <button type="button" class="btn-close bg-white" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">

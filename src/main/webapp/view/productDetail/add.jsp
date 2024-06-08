@@ -22,12 +22,12 @@
 <body>
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false"
      tabindex="-1"
-     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="background-color: #0e2238">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
             <jsp:include page="../menu/navbar.jsp"></jsp:include>
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+        <button type="button" class="btn-close bg-white" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -116,14 +116,14 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Year of sales</label>
-                        <input type="text" class="form-control" value="${product.namBH}" name="namBH">
+                        <input type="number" class="form-control" value="${product.namBH}" name="namBH">
                         <c:if test="${not empty errors}">
                             <span class="text-danger">${errors['namBH']}</span>
                         </c:if>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Quantity</label>
-                        <input type="text" class="form-control" value="${product.soLuongTon}" name="soLuongTon">
+                        <input type="number" class="form-control" value="${product.soLuongTon}" name="soLuongTon">
                         <c:if test="${not empty errors}">
                             <span class="text-danger">${errors['soLuongTon']}</span>
                         </c:if>
@@ -131,14 +131,14 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Buying price</label>
-                        <input type="text" class="form-control" value="${product.giaNhap}" name="giaNhap">
+                        <input type="number" class="form-control" value="${product.giaNhap}" name="giaNhap">
                         <c:if test="${not empty errors}">
                             <span class="text-danger">${errors['giaNhap']}</span>
                         </c:if>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Selling price</label>
-                        <input type="text" class="form-control" value="${product.giaBan}" name="giaBan">
+                        <input type="number" class="form-control" value="${product.giaBan}" name="giaBan">
                         <c:if test="${not empty errors}">
                             <span class="text-danger">${errors['giaBan']}</span>
                         </c:if>

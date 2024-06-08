@@ -10,10 +10,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.UUID;
 
@@ -31,15 +34,19 @@ public class NhanVien {
     private UUID id;
 
     @Column(name="Ma")
+    @NotBlank(message = "Mã không được trống")
     private String ma;
 
     @Column(name="Ten")
+    @NotBlank(message = "Tên không được trống")
     private String ten;
 
     @Column(name="TenDem")
+    @NotBlank(message = "Tên đệm không được trống")
     private String tenDem;
 
     @Column(name="Ho")
+    @NotBlank(message = "Họ không được trống")
     private String ho;
 
     @Column(name="GioiTinh")
@@ -47,23 +54,30 @@ public class NhanVien {
 
     @Column(name="NgaySinh")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotBlank(message = "Ngày sinh không được trống")
     private String ngaySinh;
 
     @Column(name="DiaChi")
+    @NotBlank(message = "Địa chỉ không được trống")
     private String diaChi;
 
     @Column(name="Sdt")
+    @NotBlank(message = "SĐT không được trống")
     private String sdt;
 
     @Column(name="MatKhau")
+    @NotBlank(message = "Mật khẩu không được trống")
     private String matKhau;
 
     @ManyToOne
     @JoinColumn(name = "IdCH",referencedColumnName = "id")
+    @NotNull(message = "Cửa hàng không được trống")
     private CuaHang cuaHang;
 
     @ManyToOne
     @JoinColumn(name = "IdCV",referencedColumnName = "id")
+    @NotNull(message = "Chức vụ không được trống")
     private ChucVu chucVu;
 
     @Column(name = "TrangThai")
