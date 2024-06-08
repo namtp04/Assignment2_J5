@@ -61,8 +61,8 @@
                     <span>Trạng thái</span>
                     <select name="filterTrangThai" class="form-select" aria-label="Default select example">
                         <option value="" ${not empty sessionScope.trangThai ? '' : 'selected'}>All</option>
-                        <option value="0" ${sessionScope.trangThai == 0 ? 'selected' : ''}>Chưa thanh toán</option>
-                        <option value="1" ${sessionScope.trangThai == 1 ? 'selected' : ''}>Đã thanh toán</option>
+                        <option value="0" ${sessionScope.trangThai == 0? 'selected' : ''}>Chưa thanh toán</option>
+                        <option value="1" ${sessionScope.trangThai == 1? 'selected' : ''}>Đã thanh toán</option>
                     </select>
                 </div>
                 <div class="col-4">
@@ -93,7 +93,6 @@
                 <td>${cl.sdt}</td>
                 <td>${cl.tinhTrang==1?"Đã thanh toán":"Chưa thanh toán"}</td>
                 <td>
-                    <a class="btn btn-outline-warning" href="/bill/view-update/${cl.id}">Update</a>
                     <a class="btn btn-outline-danger" href="/bill/detail/${cl.id}">Detail</a>
                 </td>
             </tr>
@@ -120,7 +119,7 @@
     <c:forEach begin="1" end="${numpage}" var="trang">
         <li class="page-item">
             <a class="page-link <c:if test="${currentPage == trang-1}">active</c:if>"
-               href="?page=${trang-1}">${trang}</a>
+               href="?page=${trang-1}<c:if test='${not empty sessionScope.trangThai}'>&filterTrangThai=${sessionScope.trangThai}</c:if>">${trang}</a>
         </li>
     </c:forEach>
     <c:if test="${currentPage==numpage-1}">

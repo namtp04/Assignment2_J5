@@ -83,9 +83,9 @@
                 <td>${cl.sdt}</td>
                 <td>${cl.diaChi}</td>
                 <td>
-                    <a class="btn btn-outline-warning" href="/product-type/view-update/${cl.id}">Update</a>
+                    <a class="btn btn-outline-warning" href="/customer/view-update/${cl.id}">Update</a>
                     <a onclick="return confirm('Do you want to delete this item?')" class="btn btn-outline-danger"
-                       href="/product-type/delete/${cl.id}">Delete</a>
+                       href="/customer/delete/${cl.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>

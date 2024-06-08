@@ -78,12 +78,6 @@
                 <span>Quản lý hóa đơn</span>
             </a>
         </li>
-        <li class="nav-item mb-3 mt-1">
-            <a href="/bill-detail/index" class="navbar-brand">
-                <i class="far fa-money-bill-alt"></i>
-                <span>Manager Order Detail</span>
-            </a>
-        </li>
     </ul>
     <div class="text-white">
         <c:if test="${not empty sessionScope.username}">

@@ -161,7 +161,7 @@
     </c:if>
     <c:forEach begin="1" end="${numpage}" var="trang">
         <li class="page-item"><a class="page-link <c:if test="${currentPage == trang-1}">active</c:if>"
-                                 href="?page=${trang-1}">${trang}</a></li>
+                                 href="?page=${trang-1}<c:if test='${not empty sessionScope.selectedProduct}'>&searchProduct=${sessionScope.selectedProduct}</c:if><c:if test='${not empty sessionScope.selectedProductType}'>&searchProductType=${sessionScope.selectedProductType}</c:if><c:if test='${not empty sessionScope.selectedColor}'>&searchColor=${sessionScope.selectedColor}</c:if>">${trang}</a></li>
     </c:forEach>
     <c:if test="${currentPage==numpage-1}">
         <li class="page-item disabled">

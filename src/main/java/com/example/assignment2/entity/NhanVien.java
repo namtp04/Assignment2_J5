@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -55,8 +56,8 @@ public class NhanVien {
     @Column(name="NgaySinh")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "Ngày sinh không được trống")
-    private String ngaySinh;
+    @NotNull(message = "Ngày sinh không được trống")
+    private Date ngaySinh;
 
     @Column(name="DiaChi")
     @NotBlank(message = "Địa chỉ không được trống")
