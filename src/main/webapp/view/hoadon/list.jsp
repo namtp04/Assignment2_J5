@@ -93,6 +93,9 @@
                 <td>${cl.sdt}</td>
                 <td>${cl.tinhTrang==1?"Đã thanh toán":"Chưa thanh toán"}</td>
                 <td>
+                    <c:if test="${cl.tinhTrang==0}">
+                        <a class="btn btn-outline-info" href="/bill/update/${cl.id}" onclick="return confirm('Xác nhận thanh toán cho hóa đơn này?')">Xác nhận thanh toán</a>
+                    </c:if>
                     <a class="btn btn-outline-danger" href="/bill/detail/${cl.id}">Detail</a>
                 </td>
             </tr>

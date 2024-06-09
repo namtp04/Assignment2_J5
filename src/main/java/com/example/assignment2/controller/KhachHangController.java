@@ -3,8 +3,11 @@ package com.example.assignment2.controller;
 import com.example.assignment2.entity.DongSanPham;
 import com.example.assignment2.entity.KhachHang;
 import com.example.assignment2.entity.NhanVien;
+import com.example.assignment2.repository.GioHangRepository;
+import com.example.assignment2.repository.HoaDonRepository;
 import com.example.assignment2.repository.KhachHangRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,9 +30,12 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/customer")
+@RequiredArgsConstructor
 public class KhachHangController {
-    @Autowired
-    private KhachHangRepository khachHangRepository;
+
+    private final KhachHangRepository khachHangRepository;
+    private final HoaDonRepository hoaDonRepository;
+    private final GioHangRepository gioHangRepository;
 
     @GetMapping("/list")
     public String hienThi(Model model, @RequestParam(value = "page",defaultValue = "0") Integer page){
@@ -79,9 +85,43 @@ public class KhachHangController {
         return "redirect:/customer/list";
     }
 
+    @GetMapping("delete/{ma}")
+    public String xoa(@PathVariable("ma") UUID ma,Model model, @RequestParam(value = "page",defaultValue = "0") Integer page) {
+        if(hoaDonRepository.getByIdKhachHang(ma).size()!=0){
+            model.addAttribute("lstKH", phanTrang(page,model));
+            model.addAttribute("deleteFail","Khách hàng này đang có 1 hóa đơn không thể xóa");
+            return "/khachhang/list";
+        }
+        if(gioHangRepository.getByIdKhachHang(ma).size()!=0){
+            model.addAttribute("lstKH", phanTrang(page,model));
+            model.addAttribute("deleteFail","Khách hàng này đang có 1 giỏ hàng không thể xóa");
+            return "/khachhang/list";
+        }
+        khachHangRepository.deleteById(ma);
+        return "redirect:/customer/list";
+    }
+
+    @RequestMapping("search")
+    public String search(Model model, @RequestParam(value = "page",defaultValue = "0") Integer page,@RequestParam(value = "customerSearchValue",required = false,defaultValue = "") String ten) {
+        if(ten.trim().isEmpty()){
+            model.addAttribute("lstKH", phanTrang(page,model));
+        }else{
+            model.addAttribute("lstKH", phanTrangSearch(page,model,ten));
+        }
+        return "/khachhang/list";
+    }
+
     private List<KhachHang> phanTrang(Integer currentPage, Model model) {
         Pageable pageable = PageRequest.of(currentPage, 5);
         Page<KhachHang> khachHangPage = khachHangRepository.findAll(pageable);
+        model.addAttribute("numpage", khachHangPage.getTotalPages());
+        model.addAttribute("currentPage", currentPage);
+        return khachHangPage.getContent();
+    }
+
+    private List<KhachHang> phanTrangSearch(Integer currentPage, Model model,String ten) {
+        Pageable pageable = PageRequest.of(currentPage, 5);
+        Page<KhachHang> khachHangPage = khachHangRepository.findBySDT(ten.trim(),pageable);
         model.addAttribute("numpage", khachHangPage.getTotalPages());
         model.addAttribute("currentPage", currentPage);
         return khachHangPage.getContent();

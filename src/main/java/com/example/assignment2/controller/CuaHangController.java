@@ -112,7 +112,7 @@ public class CuaHangController {
 
     private List<CuaHang> phanTrangSearch(Integer currentPage, Model model,String ten) {
         Pageable pageable = PageRequest.of(currentPage, 5);
-        String timTen = "%"+ten+"%";
+        String timTen = "%"+ten.trim()+"%";
         Page<CuaHang> cuaHangPage = cuaHangRepository.findByTen(timTen,pageable);
         model.addAttribute("numpage", cuaHangPage.getTotalPages());
         model.addAttribute("currentPage", currentPage);

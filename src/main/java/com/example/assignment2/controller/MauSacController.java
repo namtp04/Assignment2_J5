@@ -114,7 +114,7 @@ public class MauSacController {
 
     private List<MauSac> phanTrangSearch(Integer currentPage, Model model,String ten) {
         Pageable pageable = PageRequest.of(currentPage, 5);
-        String timTen = "%"+ten+"%";
+        String timTen = "%"+ten.trim()+"%";
         Page<MauSac> mauSacPage = mauSacRepository.findByTen(timTen,pageable);
         model.addAttribute("numpage", mauSacPage.getTotalPages());
         model.addAttribute("currentPage", currentPage);

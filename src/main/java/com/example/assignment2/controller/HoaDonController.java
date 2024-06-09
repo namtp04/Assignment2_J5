@@ -54,6 +54,14 @@ public class HoaDonController {
         return "/hoadon/detail";
     }
 
+    @RequestMapping("update/{ma}")
+    public String update(@PathVariable("ma") UUID ma){
+        HoaDon hd = hoaDonRepository.findById(ma).get();
+        hd.setTinhTrang(1);
+        hoaDonRepository.save(hd);
+        return "redirect:/bill/list";
+    }
+
     @RequestMapping("search")
     public String filter(Model model,
                          @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,

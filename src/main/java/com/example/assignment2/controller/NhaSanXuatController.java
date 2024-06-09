@@ -114,7 +114,7 @@ public class NhaSanXuatController {
 
     private List<NhaSanXuat> phanTrangSearch(Integer currentPage, Model model,String ten) {
         Pageable pageable = PageRequest.of(currentPage, 5);
-        String timTen = "%"+ten+"%";
+        String timTen = "%"+ten.trim()+"%";
         Page<NhaSanXuat> nhaSanXuatPage = nhaSanXuatRepository.findByTen(timTen,pageable);
         model.addAttribute("numpage", nhaSanXuatPage.getTotalPages());
         model.addAttribute("currentPage", currentPage);

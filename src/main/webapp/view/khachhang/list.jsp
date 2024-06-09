@@ -89,9 +89,9 @@
                 </td>
             </tr>
         </c:forEach>
-        <c:if test="${lstLSP.size()==0}">
+        <c:if test="${lstKH.size()==0}">
             <tr>
-                <td colspan="4">Dữ liệu trống</td>
+                <td colspan="7">Dữ liệu trống</td>
             </tr>
         </c:if>
         </tbody>
@@ -130,7 +130,7 @@
     window.onload = function() {
         <c:if test="${not empty deleteFail}">
         alert('${deleteFail}');
-        window.location.href='/product-type/list';
+        window.location.href='/customer/list';
         </c:if>
     };
 </script>
