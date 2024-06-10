@@ -93,7 +93,7 @@
     </table>
     <div class="row mt-5">
         <div class="col-6 mt-5">
-            <h5>TRẠNG THÁI: <span <c:if test="${hd.tinhTrang==1}">class="text-success"</c:if><c:if test="${hd.tinhTrang==0}">class="text-danger"</c:if>>${hd.tinhTrang==1?"Đã thanh toán":"Chưa thanh toán"}</span></h5>
+            <h5>TRẠNG THÁI: <span <c:if test="${hd.tinhTrang==1}">class="text-success"</c:if><c:if test="${hd.tinhTrang==2}">class="text-danger"</c:if><c:if test="${hd.tinhTrang==0}">class="text-warning"</c:if>>${hd.tinhTrang==0?"Chưa thanh toán":hd.tinhTrang==1?"Đã thanh toán":"Đã hủy"}</span></h5>
         </div>
         <div class="col-3"></div>
         <div class="col-3 mt-5">

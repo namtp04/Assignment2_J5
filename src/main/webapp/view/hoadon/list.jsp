@@ -63,6 +63,7 @@
                         <option value="" ${not empty sessionScope.trangThai ? '' : 'selected'}>All</option>
                         <option value="0" ${sessionScope.trangThai == 0? 'selected' : ''}>Chưa thanh toán</option>
                         <option value="1" ${sessionScope.trangThai == 1? 'selected' : ''}>Đã thanh toán</option>
+                        <option value="2" ${sessionScope.trangThai == 2? 'selected' : ''}>Đã hủy</option>
                     </select>
                 </div>
                 <div class="col-4">
@@ -91,7 +92,7 @@
                 <td>${cl.nhanVien.ten}</td>
                 <td>${cl.ngayTao}</td>
                 <td>${cl.sdt}</td>
-                <td>${cl.tinhTrang==1?"Đã thanh toán":"Chưa thanh toán"}</td>
+                <td <c:if test="${cl.tinhTrang==1}">class="text-success"</c:if><c:if test="${cl.tinhTrang==2}">class="text-danger"</c:if><c:if test="${cl.tinhTrang==0}">class="text-warning"</c:if>>${cl.tinhTrang==0?"Chưa thanh toán":cl.tinhTrang==1?"Đã thanh toán":"Đã hủy"}</td>
                 <td>
                     <c:if test="${cl.tinhTrang==0}">
                         <a class="btn btn-outline-info" href="/bill/update/${cl.id}" onclick="return confirm('Xác nhận thanh toán cho hóa đơn này?')">Xác nhận thanh toán</a>
